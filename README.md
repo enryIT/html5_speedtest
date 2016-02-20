@@ -14,4 +14,4 @@ Please read the [contribution guidelines](contributing.md) first.
 
 ## License
 
-[![CC0](https://licensebuttons.net/p/zero/1.0/88x31.png)](http://creativecommons.org/publicdomain/zero/1.0/)
+[![GPL3](http://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/graphics/gplv3-127x51.png)
