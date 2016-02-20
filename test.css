@@ -1,0 +1,142 @@
+body {
+    margin: 0;
+    padding: 20px;
+    background-color: #fff;
+    color: #000;
+    font-family: 'Source Sans Pro', tahoma, arial, helvetica, sans-serif;
+    font-size: 11pt;
+}
+
+h2 {
+    font-size: 15pt !important;
+    text-align: center !important;
+    padding: 0 40px 0 0 
+    margin: 0;
+    !important
+}
+
+
+.mtrwebtester_dial {
+    position: relative;
+    width: 215px;
+    height: 215px;
+    background: url('images/dial_bg.png') no-repeat top left;
+}
+
+.mtrwebtester_dial .mtrwebtester_dial_arrow {
+    z-index: 115;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 215px;
+    height: 215px;
+    background: url('images/dial_arrow.png') no-repeat top left;
+    display: none;
+}
+
+.mtrwebtester_dial .mtrwebtester_dial_arrow_up {
+    background: url('images/dial_arrow_up.png') no-repeat top left;
+}
+
+.mtrwebtester_dial .mtrwebtester_dial_fg {
+    z-index: 120;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 215px;
+    height: 215px;
+    background: url('images/dial_fg.png') no-repeat top left;
+}
+
+.mtrwebtester_dial_ping {
+    position: relative;
+    width: 161px;
+    height: 161px;
+    background: url('images/dial_bg_150.png') no-repeat top left;
+}
+
+.mtrwebtester_dial_ping .mtrwebtester_dial_arrow {
+    z-index: 115;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 161px;
+    height: 161px;
+    background: url('images/dial_arrow_150_blue.png') no-repeat top left;
+    display: none;
+}
+
+.mtrwebtester_dial_ping .mtrwebtester_dial_fg {
+    z-index: 120;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 161px;
+    height: 161px;
+    background: url('images/dial_fg_150.png') no-repeat top left;
+}
+
+.mtrwebtester_dial_text {
+    z-index: 130;
+    position: absolute;
+    top: 85px;
+    left: 0;
+    color: #000;
+}
+
+.mtrwebtester_dial_text span {
+    font-size: 10pt;
+    display: block;
+    text-align: center;
+    width: 215px;
+}
+
+.mtrwebtester_dial_text .mtrwebtester_dial_text_number {
+    font-size: 15pt;
+    font-weight: bold;
+    font-family: "Courier New", Courier, monospace;
+}
+
+
+.mtrwebtester_bars_ping .mtrwebtester_bars_bar_in {
+    background-color: #29939F;
+}
+
+.mtrwebtester_bars_up .mtrwebtester_bars_bar_in {
+    background-color: #CC3F0E;
+}
+
+.mtrwebtester_dial_ping .mtrwebtester_dial_text {
+    top: 62px;
+}
+
+.mtrwebtester_dial_ping .mtrwebtester_dial_text span {
+    width: 161px;
+}
+
+.mtrwebtester_dial_ping .mtrwebtester_dial_text .mtrwebtester_dial_text_number {
+    font-size: 13pt;
+}
+
+.testerSlOver {
+    width: 400px;
+    margin: auto;
+}
+.testerSlOverSl {
+    float: left;
+    width: 30%;
+}
+.testerSlOverSlDown {
+    float: left;
+}
+.testerSlOverSlUp {
+    float: right;
+}
+
+@media screen and (max-width: 480px) {
+.testerSlOverSl {
+    float: left;
+    width: 100%;
+}
+  
+}

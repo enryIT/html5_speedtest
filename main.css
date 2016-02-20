@@ -1,0 +1,14 @@
+.btn-toolbar {
+    margin-bottom: 9px;
+	text-align: center;
+}
+
+.btn-toolbar .btn-group {
+    margin-top: 9px;
+
+}
+
+@media (max-width:480px) {
+
+
+}
