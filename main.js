@@ -16,19 +16,19 @@ if (Network.supportsResourceTiming) {
      */
 
     var UI = {
-		$btnStart: $('[data-measure]'),
+	$btnStart: $('[data-measure]'),
         $btnAbort: $('[data-abort]'),
 
         start: function() {
-			//reset test sizes on retest
-			net.download.settings({
+   	    //reset test sizes on retest
+		net.download.settings({
 				data: {
-            // The amount of data to initially use.
+            			// The amount of data to initially use.
 				size: 10 * 1024 * 1024,} // 10 MB
 			});
-			net.upload.settings({
+		net.upload.settings({
 				data: {
-            // The amount of data to initially use.
+            			// The amount of data to initially use.
 				size: 2 * 1024 * 1024, }// 2 MB
 			});
 			
@@ -39,11 +39,11 @@ if (Network.supportsResourceTiming) {
 			startLatency();
 						
 			UI.$btnStart.prop('disabled', true);
-            UI.$btnAbort.prop('disabled', false);
+            		UI.$btnAbort.prop('disabled', false);
         },
 
         restart: function(size) {
-			$( "#log" ).append("It took less than 8 seconds to " + rawModule + " " + size/1024/1024/2 + "MB of data... Restarting with " + size/1024/1024 + "MB!<br>");
+		$( "#log" ).append("It took less than 8 seconds to " + rawModule + " " + size/1024/1024/2 + "MB of data... Restarting with " + size/1024/1024 + "MB!<br>");
 		
         },
 
@@ -57,7 +57,7 @@ if (Network.supportsResourceTiming) {
             net.download.abort();
         },
 		
-		value: function(value, unit) {
+	value: function(value, unit) {
             if (value != null) {
                 return '<span class="blue">' + value.toFixed(3) + ' ' + unit + '</span>';
             } else {
@@ -96,27 +96,23 @@ function start(size) {
 }
 		
 function progress(avg, instant) {
-			if( rawModule == "download"){
-			ntmtTesterDialDown.drawDial(avg/1024*8);
-			}
-			if( rawModule == "upload"){
-			ntmtTesterDialUp.drawDial(avg/1024*8);
-			}			
-	}
-
+	if( rawModule == "download"){
+		ntmtTesterDialDown.drawDial(avg/1024*8);
+	}else if( rawModule == "upload"){
+		ntmtTesterDialUp.drawDial(avg/1024*8);
+	}			
+}
 
 function end(avg) {
-			if( rawModule == "download" )
-			{
-				var downloadResult = (avg / 1024 / 1024 * 8);
-				$( "#log" ).append("<b>Finished download, average: " + downloadResult.toFixed(2) + "Mbps<br></b>");
-				setTimeout("startUpload()", 1000);
-
-			} else if( rawModule == "upload" ) {
-				var uploadResult = (avg / 1024 / 1024 * 8);
-				$( "#log" ).append("<b>Finished upload, average: " + uploadResult.toFixed(2) + "Mbps<br></b>");
-				UI.stop();
-			}
+	if( rawModule == "download" ){
+		var downloadResult = (avg / 1024 / 1024 * 8);
+		$( "#log" ).append("<b>Finished download, average: " + downloadResult.toFixed(2) + "Mbps<br></b>");
+		setTimeout("startUpload()", 1000);
+	} else if( rawModule == "upload" ) {
+		var uploadResult = (avg / 1024 / 1024 * 8);
+		$( "#log" ).append("<b>Finished upload, average: " + uploadResult.toFixed(2) + "Mbps<br></b>");
+		UI.stop();
+	}
 }
     net.upload.on('start', start).on('progress', progress).on('restart', UI.restart).on('end', end);
     net.download.on('start', start).on('progress', progress).on('restart', UI.restart).on('end', end);
@@ -129,16 +125,15 @@ function end(avg) {
 
             all = '[ ' + all.join(' , ') + ' ]';
 			
-			var allLatency = all;
-			var averageLatency = avg;
+	    var allLatency = all;
+	    var averageLatency = avg;
 			
-			//$( "#log" ).append("Latency: " + allLatency + "<br>");
+	    //$( "#log" ).append("Latency: " + allLatency + "<br>");
 
-			$( "#log" ).append("<b>Average latency: " + averageLatency.toFixed(2) + "ms <br></b>");
-			ntmtTesterDialPing.drawDial(averageLatency);
-			setTimeout("startDownload()", 1000);
-            
-        });
+	    $( "#log" ).append("<b>Average latency: " + averageLatency.toFixed(2) + "ms <br></b>");
+	    ntmtTesterDialPing.drawDial(averageLatency);
+	    setTimeout("startDownload()", 1000);
+            });
 
     /*
      * Bindings
@@ -146,6 +141,3 @@ function end(avg) {
 
     UI.$btnStart.on('click', UI.start);
     UI.$btnAbort.on('click', UI.abort);
-	
-	
-	
