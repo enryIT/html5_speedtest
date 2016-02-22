@@ -1,15 +1,25 @@
 var speed;
 var rawModule;
 var module;
-var net = new Network();
+var net = new Network({
+		latency: {
+		        // How many measures should be returned.
+		        measures: 7,
+		        // How much attempts to get a valid value should be done for each measure.
+		        attempts: 3
+    		}
+});
 
-if (Network.supportsResourceTiming) {
-    $( "#leg" ).append("Click start tests button to begin!");
-} else {
-    $( "#leg" ).append("Your browser doesn't support all of the tests, expect some weird results!");
-}
+if (Network.supportsResourceTiming)
+    $( "#log" ).append("Click start tests button to begin!");
+else 
+    $( "#log" ).append("Your browser doesn't support all of the tests, expect some weird results!");
 
-    $('.btn-group').tooltip();
+/*    $('.btn-group').tooltip({
+        effect: "slideDown",
+        delay: 300,    
+        fade: true,
+    });*/
 
     /*
      * UI
@@ -20,37 +30,36 @@ if (Network.supportsResourceTiming) {
         $btnAbort: $('[data-abort]'),
 
         start: function() {
-   	    //reset test sizes on retest
+		//reset test sizes on retest
 		net.download.settings({
-				data: {
-            			// The amount of data to initially use.
+			data: {
+        			// The amount of data to initially use.
 				size: 10 * 1024 * 1024,} // 10 MB
 			});
 		net.upload.settings({
-				data: {
+			data: {
             			// The amount of data to initially use.
 				size: 2 * 1024 * 1024, }// 2 MB
 			});
 			
-			$( "#log" ).empty();
-			$.getJSON('getip.php', function(data){
-				$( "#log" ).append("<b>Your IP is: " + data.ip + "<br></b>");
-			});
-			startLatency();
+		$( "#log" ).empty();
+		$.getJSON('getip.php', function(data){
+			$( "#log" ).append("<b>Your IP is: " + data.ip + "<br></b>");
+		});
+		startLatency();
 						
-			UI.$btnStart.prop('disabled', true);
-            		UI.$btnAbort.prop('disabled', false);
-        },
+		UI.$btnStart.prop('disabled', true);
+                UI.$btnAbort.prop('disabled', false);
+       	},
 
         restart: function(size) {
 		$( "#log" ).append("It took less than 8 seconds to " + rawModule + " " + size/1024/1024/2 + "MB of data... Restarting with " + size/1024/1024 + "MB!<br>");
-		
-        },
+	},
 
         stop: function() {
-            UI.$btnStart.prop('disabled', false);
-            UI.$btnAbort.prop('disabled', true);
-		},
+        	UI.$btnStart.prop('disabled', false);
+        	UI.$btnAbort.prop('disabled', true);
+	},
 
         abort: function() {
             net.upload.abort();
@@ -58,16 +67,19 @@ if (Network.supportsResourceTiming) {
         },
 		
 	value: function(value, unit) {
-            if (value != null) {
-                return '<span class="blue">' + value.toFixed(3) + ' ' + unit + '</span>';
-            } else {
-                return '<span class="blue">null</span>';
-            }
+        	if (value <= 50) {
+                	return '<span class="green">' + value.toFixed(3) + ' ' + unit + '</span>';
+        	} else if (value <= 200) {
+			return '<span class="orange">' + value.toFixed(3) + ' ' + unit + '</span>';
+		} else if (value <= 10000 ) {
+			return '<span class="red">' + value.toFixed(3) + ' ' + unit + '</span>';
+		} else {
+                	return '<span class="red">null</span>';
+            	}
         },
     };
 
-function startLatency()
-{
+function startLatency(){
 	//$( "#log" ).append("Starting latency...<br>");
 	rawModule = "latency";
 	module = rawModule.charAt(0).toUpperCase() + rawModule.slice(1);
@@ -75,42 +87,40 @@ function startLatency()
 	net[rawModule].start();
 	net[rawModule].trigger('start');	
 }	
-function startDownload()
-{
+function startDownload(){
 	//$( "#log" ).append("Starting download...<br>");
 	rawModule = "download";
 	module = rawModule.charAt(0).toUpperCase() + rawModule.slice(1);
 	net[rawModule].start();
 }
-function startUpload()
-{
+function startUpload(){
 	//$( "#log" ).append("Starting upload...<br>");
 	rawModule = "upload";
 	module = rawModule.charAt(0).toUpperCase() + rawModule.slice(1);
 	net[rawModule].start();
 }
-function start(size) {
-	if( rawModule != "latency" ){
+function start(size){
+	if( rawModule != "latency" )
 		$( "#log" ).append("Starting " + rawModule + " measures " + "with " + (size / 1024 / 1024) + "MB" + " of data" + "...<br>");
-	}
 }
 		
 function progress(avg, instant) {
-	if( rawModule == "download"){
+	if( rawModule == "download")
 		ntmtTesterDialDown.drawDial(avg/1024*8);
-	}else if( rawModule == "upload"){
+	else if( rawModule == "upload")
 		ntmtTesterDialUp.drawDial(avg/1024*8);
-	}			
 }
+
 
 function end(avg) {
 	if( rawModule == "download" ){
 		var downloadResult = (avg / 1024 / 1024 * 8);
 		$( "#log" ).append("<b>Finished download, average: " + downloadResult.toFixed(2) + "Mbps<br></b>");
-		setTimeout("startUpload()", 1000);
+		setTimeout("startUpload()", 2000);
 	} else if( rawModule == "upload" ) {
 		var uploadResult = (avg / 1024 / 1024 * 8);
 		$( "#log" ).append("<b>Finished upload, average: " + uploadResult.toFixed(2) + "Mbps<br></b>");
+		$( "#start" ).empty().append("  Restart test");
 		UI.stop();
 	}
 }
@@ -124,16 +134,12 @@ function end(avg) {
             });
 
             all = '[ ' + all.join(' , ') + ' ]';
-			
-	    var allLatency = all;
-	    var averageLatency = avg;
-			
-	    //$( "#log" ).append("Latency: " + allLatency + "<br>");
-
-	    $( "#log" ).append("<b>Average latency: " + averageLatency.toFixed(2) + "ms <br></b>");
-	    ntmtTesterDialPing.drawDial(averageLatency);
-	    setTimeout("startDownload()", 1000);
-            });
+						
+	    $( "#log" ).append("Latency: " + all + "<br>");
+            $( "#log" ).append("<b>Average latency: " + avg.toFixed(2) + "ms <br></b>");
+	    ntmtTesterDialPing.drawDial(avg);
+	    setTimeout("startDownload()", 2000);
+   });
 
     /*
      * Bindings
@@ -141,3 +147,6 @@ function end(avg) {
 
     UI.$btnStart.on('click', UI.start);
     UI.$btnAbort.on('click', UI.abort);
+	
+	
+	

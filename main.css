@@ -1,3 +1,6 @@
+legend {
+    margin-bottom: 10px;
+}
 .btn-toolbar {
     margin-bottom: 9px;
 	text-align: center;
@@ -7,8 +10,22 @@
     margin-top: 9px;
 
 }
-
-@media (max-width:480px) {
-
-
+.row {
+    margin-left: 33%;
+    margin-right: 33%;
+}
+.green {
+    color: green;
+}
+.orange {
+    color: orange;
+}
+.red {
+    color: red;
+}
+@media only screen and (max-width: 760px) {
+    .row {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
 }

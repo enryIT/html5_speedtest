@@ -10,9 +10,7 @@ body {
 h2 {
     font-size: 15pt !important;
     text-align: center !important;
-    padding: 0 40px 0 0 
-    margin: 0;
-    !important
+    margin: 5% !important;
 }
 
 
@@ -121,22 +119,29 @@ h2 {
 .testerSlOver {
     width: 400px;
     margin: auto;
+    display: inline-block;
 }
 .testerSlOverSl {
-    float: left;
-    width: 30%;
+    display: inline-block;
 }
-.testerSlOverSlDown {
+.testerSlOverSlIn{
+    
+}
+/*.testerSlOverSlDown {
     float: left;
+    display: inline-block;
 }
 .testerSlOverSlUp {
     float: right;
+    display: inline-block;
+}
+.testerSlOverSlPing {
+    float: none;
+    display: inline-block;
+    width: 24%;
+}*/
+
+@media screen and (max-width: 760px) {
+.testerSlOverSl { display: none }
 }
 
-@media screen and (max-width: 480px) {
-.testerSlOverSl {
-    float: left;
-    width: 100%;
-}
-  
-}
