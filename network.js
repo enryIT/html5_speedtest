@@ -554,6 +554,8 @@ var BandwidthModule = (function (_HttpModule) {
 
             // Save the `loaded` property of the event for the next progress event
             this._lastLoadedValue = loaded;
+	    var dataSettings = this.settings().data,
+            size = dataSettings.size * dataSettings.multiplier;
 
             // Defer measures saving and event triggering, this allows to cancel the last progress event, which can generate
             // incoherent values.
@@ -561,7 +563,7 @@ var BandwidthModule = (function (_HttpModule) {
                 _this2._avgSpeed = avgSpeed;
                 _this2._speedRecords.push(instantSpeed);
 
-                _this2.trigger('progress', avgSpeed, instantSpeed);
+                _this2.trigger('progress', avgSpeed, instantSpeed, loaded, size);
             });
 
             return this;
@@ -589,6 +591,7 @@ var BandwidthModule = (function (_HttpModule) {
     }, {
         key: '_end',
         value: function _end() {
+	    var loaded = event.loaded;
             // A timeout or an abort occured, bypass the further requests and trigger the "end" event.
             if (this._intendedEnd) {
                 this._isRestarting = false;
@@ -601,7 +604,7 @@ var BandwidthModule = (function (_HttpModule) {
                         size = dataSettings.size * dataSettings.multiplier;
 
                     this.settings({ data: { size: size } });
-                    this.trigger('restart', size);
+                    this.trigger('restart', size, loaded);
 
                     this._isRestarting = true;
                     this.start();

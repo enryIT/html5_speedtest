@@ -10,7 +10,7 @@ body {
 h2 {
     font-size: 15pt !important;
     text-align: center !important;
-    margin: 5% !important;
+    margin: 5%;
 }
 
 
@@ -94,16 +94,6 @@ h2 {
     font-weight: bold;
     font-family: "Courier New", Courier, monospace;
 }
-
-
-.mtrwebtester_bars_ping .mtrwebtester_bars_bar_in {
-    background-color: #29939F;
-}
-
-.mtrwebtester_bars_up .mtrwebtester_bars_bar_in {
-    background-color: #CC3F0E;
-}
-
 .mtrwebtester_dial_ping .mtrwebtester_dial_text {
     top: 62px;
 }
@@ -115,14 +105,13 @@ h2 {
 .mtrwebtester_dial_ping .mtrwebtester_dial_text .mtrwebtester_dial_text_number {
     font-size: 13pt;
 }
-
-.testerSlOver {
+/*.testerSlOver {
     width: 400px;
     margin: auto;
     display: inline-block;
-}
+}*/
 .testerSlOverSl {
-    display: inline-block;
+    display: inline-table;
 }
 .testerSlOverSlIn{
     
@@ -140,8 +129,58 @@ h2 {
     display: inline-block;
     width: 24%;
 }*/
-
+#progressBarDown {
+    width: 100%;
+    height: 22px;
+    margin: 10% auto;
+    background: #292929;
+    border: 1px solid #111;	
+    border-radius: 5px;	
+    overflow: hidden;
+    box-shadow: 0 0 5px #333;
+}
+#progressBarDown div {
+    height: 100%;
+    color: #fff;
+    text-align: right;
+    line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+    width: 0;
+    /*background-color: #1a82f7;*/
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#5CA222), to(#487e1b)); 
+    background: -webkit-linear-gradient(top, #5CA222, #487e1b); 
+    background: -moz-linear-gradient(top, #5CA222, #487e1b); 
+    background: -ms-linear-gradient(top, #5CA222, #487e1b); 
+    background: -o-linear-gradient(top, #5CA222, #487e1b);
+}
+#progressBarUp {
+    width: 100%;
+    height: 22px;
+    margin: 10% auto;
+    background: #292929;
+    border: 1px solid #111;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 5px #333;
+}
+#progressBarUp div {
+    height: 100%;
+    color: #fff;
+    text-align: right;
+    line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+    width: 0;
+    /*background-color: #1a82f7;*/
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a26822), to(#7e511b));
+    background: -webkit-linear-gradient(top, #a26822, #7e511b);
+    background: -moz-linear-gradient(top, #a26822, #7e511b);
+    background: -ms-linear-gradient(top, #a26822, #7e511b);
+    background: -o-linear-gradient(top, #a26822, #7e511b);
+}
 @media screen and (max-width: 760px) {
-.testerSlOverSl { display: none }
+    .testerSlOverSlIn { display: none }
+    .testerSlOverSl { width: 50% }
+    #tipo { margin: 2% }
+    #progressBarDown { margin: auto }
+    #progressBarUp { margin: auto }
+    #log { margin: 5% }
 }
 

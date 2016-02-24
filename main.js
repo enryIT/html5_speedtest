@@ -4,7 +4,7 @@ var module;
 var net = new Network({
 		latency: {
 		        // How many measures should be returned.
-		        measures: 7,
+		        measures: 5,
 		        // How much attempts to get a valid value should be done for each measure.
 		        attempts: 3
     		}
@@ -52,8 +52,8 @@ else
                 UI.$btnAbort.prop('disabled', false);
        	},
 
-        restart: function(size) {
-		$( "#log" ).append("It took less than 8 seconds to " + rawModule + " " + size/1024/1024/2 + "MB of data... Restarting with " + size/1024/1024 + "MB!<br>");
+        restart: function(size,loaded) {
+		$( "#log" ).append("It took less than 8 seconds to " + rawModule + " " + loaded/1024/1024 + "MB of data... Restarting with " + size/1024/1024 + "MB!<br>");
 	},
 
         stop: function() {
@@ -74,7 +74,7 @@ else
 		} else if (value <= 10000 ) {
 			return '<span class="red">' + value.toFixed(3) + ' ' + unit + '</span>';
 		} else {
-                	return '<span class="red">null</span>';
+                	return '<span class="red">NaN</span>';
             	}
         },
     };
@@ -103,21 +103,25 @@ function start(size){
 	if( rawModule != "latency" )
 		$( "#log" ).append("Starting " + rawModule + " measures " + "with " + (size / 1024 / 1024) + "MB" + " of data" + "...<br>");
 }
-		
-function progress(avg, instant) {
-	if( rawModule == "download")
+function progress(avg, instant, loaded, size) {
+	size = (size/1024/1024/2).toFixed(2);
+	loaded = (loaded/1024/1024).toFixed(2);
+	if( rawModule == "download"){
+		ntmt_progressBar(loaded*100/size, $('#progressBarDown'));
 		ntmtTesterDialDown.drawDial(avg/1024*8);
-	else if( rawModule == "upload")
+	} else {
+		ntmt_progressBar(loaded*100/size, $('#progressBarUp'));
 		ntmtTesterDialUp.drawDial(avg/1024*8);
+	}
 }
-
-
 function end(avg) {
 	if( rawModule == "download" ){
+		ntmt_progressBar(100, $('#progressBarDown'));
 		var downloadResult = (avg / 1024 / 1024 * 8);
 		$( "#log" ).append("<b>Finished download, average: " + downloadResult.toFixed(2) + "Mbps<br></b>");
 		setTimeout("startUpload()", 2000);
-	} else if( rawModule == "upload" ) {
+	} else {
+		ntmt_progressBar(100, $('#progressBarUp'));
 		var uploadResult = (avg / 1024 / 1024 * 8);
 		$( "#log" ).append("<b>Finished upload, average: " + uploadResult.toFixed(2) + "Mbps<br></b>");
 		$( "#start" ).empty().append("  Restart test");
@@ -130,14 +134,14 @@ function end(avg) {
         .on('start', start)
         .on('end', function(avg, all) {
             all = all.map(function(latency) {
-                return UI.value(latency, 'ms');
+		return UI.value(latency, 'ms');
             });
 
             all = '[ ' + all.join(' , ') + ' ]';
-						
+	
+	    ntmtTesterDialPing.drawDial(avg);					
 	    $( "#log" ).append("Latency: " + all + "<br>");
             $( "#log" ).append("<b>Average latency: " + avg.toFixed(2) + "ms <br></b>");
-	    ntmtTesterDialPing.drawDial(avg);
 	    setTimeout("startDownload()", 2000);
    });
 

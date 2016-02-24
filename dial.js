@@ -43,18 +43,17 @@ function NtmtTesterDial(styleId,typ) {
 			$(this).css('-moz-transform','rotate('+now+'deg)');
 			$(this).css('transform','rotate('+now+'deg)');
 		},
-		duration:1500
+		duration:1000
 	},'linear');
-	$('#'+this.htmlId ).fadeTo( 1500 , 0.25, function() {
+	$('#'+this.htmlId ).fadeTo( 1000 , 0.25, function() {
 	});
 	this.drawDial = function(value) {
 		if (value>=0) {
 			if (this.enabled==0) {
 				this.enabled=1;
-				$('#'+this.htmlId ).fadeTo( 333 , 1.0, function() {
+				$('#'+this.htmlId ).fadeTo( 250 , 1.0, function() {
 				});
 			}
-			$('#'+this.htmlId+' .mtrwebtester_dial_arrow').show();
 			$('#'+this.htmlId+' .mtrwebtester_dial_arrow').animate({  value: this.vratAngleGauge(value) }, {
 					step: function(now,fx) {
 						$(this).css('-webkit-transform','rotate('+now+'deg)'); 
@@ -134,28 +133,27 @@ function NtmtTesterDialPing(styleId) {
 			$(this).css('-moz-transform','rotate('+now+'deg)');
 			$(this).css('transform','rotate('+now+'deg)');
 		},
-		duration:1500
+		duration:1000
 	},'linear');
-        $('#'+this.htmlId ).fadeTo( 1500 , 0.25, function() {
+        $('#'+this.htmlId ).fadeTo( 1000 , 0.25, function() {
         });
 	this.drawDial = function(value) {
 		if (value>=0) {
 			if (this.enabled==0) {
                                 this.enabled=1;
-                                $('#'+this.htmlId ).fadeTo( "slow" , 1.0, function() {
+                                $('#'+this.htmlId ).fadeTo( 250 , 1.0, function() {
                                 });
                         }
-			$('#'+this.htmlId+' .mtrwebtester_dial_arrow').show();
 			$('#'+this.htmlId+' .mtrwebtester_dial_arrow').animate({  value: this.vratAngleGauge(value) }, {
 					step: function(now,fx) {
 						$(this).css('-webkit-transform','rotate('+now+'deg)'); 
 						$(this).css('-moz-transform','rotate('+now+'deg)');
 						$(this).css('transform','rotate('+now+'deg)');
 					},
-					duration:1000
+					duration:250
 			},'linear');
 		jQuery({someValue: (this.valueOld) ,  htmlID:this.htmlId }).animate({someValue: value}, {
-			duration: 1000,
+			duration: 250,
 			easing:'linear',
 			step: function() {
 				$('#'+this.htmlID+' .mtrwebtester_dial_text_number').text(ntmt_getvalue(this.someValue));
@@ -186,6 +184,10 @@ function NtmtTesterDialPing(styleId) {
 	this.toRadians = function(Angle) {
 		return ((Angle/360)*6.28318530718);
 	}
+}
+function ntmt_progressBar(percent, $element) {
+    var progressBarWidth = percent * $element.width() / 100;
+    $element.find('div').animate({ width: progressBarWidth }, 50).html(percent.toFixed(0) + "%   ");
 }
 function ntmt_getvalue(value) {
 	var out=0;
