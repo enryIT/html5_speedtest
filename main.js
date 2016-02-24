@@ -41,7 +41,9 @@ else
             			// The amount of data to initially use.
 				size: 2 * 1024 * 1024, }// 2 MB
 			});
-			
+		
+		ntmt_progressBar(0, $('#progressBarDown'));
+		ntmt_progressBar(0, $('#progressBarUp'));	
 		$( "#log" ).empty();
 		$.getJSON('getip.php', function(data){
 			$( "#log" ).append("<b>Your IP is: " + data.ip + "<br></b>");
