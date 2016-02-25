@@ -75,6 +75,21 @@ function NtmtTesterDial(styleId,typ) {
 		}
 		this.valueOld=value;
 	}
+	this.resetDial = function() {
+		if (this.enabled==1) {
+                	this.enabled=0;
+                        $('#'+this.htmlId ).fadeTo( 1000 , 0.25, function() {});
+			$('#'+this.htmlId+' .mtrwebtester_dial_arrow').animate({  value: -135 }, {
+                        	step: function(now,fx) {
+                                	$(this).css('-webkit-transform','rotate('+now+'deg)');
+                                	$(this).css('-moz-transform','rotate('+now+'deg)');
+                                	$(this).css('transform','rotate('+now+'deg)');
+                        	},
+                		duration:1000
+                	},'linear');
+                $('#'+this.htmlId+' .mtrwebtester_dial_text_number').html("&nbsp;");
+		}
+	}	
 	this.vratAngleGauge = function(value) {
 		tmpvalue=value;
 		if (tmpvalue>this.DialGaugeMax) {
@@ -165,6 +180,21 @@ function NtmtTesterDialPing(styleId) {
 		}
 		this.valueOld=value;
 	}
+        this.resetDial = function() {
+                if (this.enabled==1) {
+                        this.enabled=0;
+                        $('#'+this.htmlId ).fadeTo( 1000 , 0.25, function() {});
+                        $('#'+this.htmlId+' .mtrwebtester_dial_arrow').animate({  value: -135 }, {
+                                step: function(now,fx) {
+                                        $(this).css('-webkit-transform','rotate('+now+'deg)');
+                                        $(this).css('-moz-transform','rotate('+now+'deg)');
+                                        $(this).css('transform','rotate('+now+'deg)');
+                                },
+                                duration:1000
+                        },'linear');
+                $('#'+this.htmlId+' .mtrwebtester_dial_text_number').html("&nbsp;");
+                }
+        }
 	this.vratAngleGauge = function(value) {
 		tmpvalue=value;
 		if (tmpvalue>this.DialGaugeMax) {
@@ -187,7 +217,7 @@ function NtmtTesterDialPing(styleId) {
 }
 function ntmt_progressBar(percent, $element) {
     var progressBarWidth = percent * $element.width() / 100;
-    $element.find('div').animate({ width: progressBarWidth }, 50).html(percent.toFixed(0) + "%   ");
+    $element.find('div').animate({ width: progressBarWidth }, 50).html(percent.toFixed(0) + "%");
 }
 function ntmt_getvalue(value) {
 	var out=0;

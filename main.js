@@ -1,6 +1,7 @@
 var speed;
 var rawModule;
 var module;
+var firstRun=0;
 var net = new Network({
 		latency: {
 		        // How many measures should be returned.
@@ -30,29 +31,26 @@ else
         $btnAbort: $('[data-abort]'),
 
         start: function() {
-		//reset test sizes on retest
-		net.download.settings({
-			data: {
-        			// The amount of data to initially use.
-				size: 10 * 1024 * 1024,} // 10 MB
-			});
-		net.upload.settings({
-			data: {
-            			// The amount of data to initially use.
-				size: 2 * 1024 * 1024, }// 2 MB
-			});
 		
-		ntmt_progressBar(0, $('#progressBarDown'));
-		ntmt_progressBar(0, $('#progressBarUp'));	
+		if(!firstRun){
 		$( "#log" ).empty();
 		$.getJSON('getip.php', function(data){
 			$( "#log" ).append("<b>Your IP is: " + data.ip + "<br></b>");
 		});
 		startLatency();
+		}
 						
 		UI.$btnStart.prop('disabled', true);
                 UI.$btnAbort.prop('disabled', false);
+
+		firstRun=1;
        	},
+	
+	reset: function() {
+		reset();
+		firstRun=0;
+		setTimeout(UI.start, 2000);
+	},
 
         restart: function(size,loaded) {
 		$( "#log" ).append("It took less than 8 seconds to " + rawModule + " " + loaded/1024/1024 + "MB of data... Restarting with " + size/1024/1024 + "MB!<br>");
@@ -80,7 +78,25 @@ else
             	}
         },
     };
-
+function reset(){
+        ntmtTesterDialDown.resetDial();
+        ntmtTesterDialUp.resetDial();
+        ntmtTesterDialPing.resetDial();
+        ntmt_progressBar(0, $('#progressBarDown'));
+        ntmt_progressBar(0, $('#progressBarUp'));
+        $( "#log" ).empty();
+        //reset test sizes on retest
+        net.download.settings({
+                data: {
+                // The amount of data to initially use.
+                size: 10 * 1024 * 1024,} // 10 MB
+        });
+        net.upload.settings({
+                data: {
+                // The amount of data to initially use.
+                size: 2 * 1024 * 1024, }// 2 MB
+        });
+}
 function startLatency(){
 	//$( "#log" ).append("Starting latency...<br>");
 	rawModule = "latency";
@@ -126,8 +142,9 @@ function end(avg) {
 		ntmt_progressBar(100, $('#progressBarUp'));
 		var uploadResult = (avg / 1024 / 1024 * 8);
 		$( "#log" ).append("<b>Finished upload, average: " + uploadResult.toFixed(2) + "Mbps<br></b>");
-		$( "#start" ).empty().append("  Restart test");
+		$( "#start" ).empty().append(" Restart test");
 		UI.stop();
+		UI.$btnStart.on('click', UI.reset);
 	}
 }
     net.upload.on('start', start).on('progress', progress).on('restart', UI.restart).on('end', end);
