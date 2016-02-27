@@ -6,6 +6,22 @@ I didn't find any opensourced HTML5 speedtest so I decided to make one...
 
 ## Thank you
 - [nesk/network.js](https://github.com/nesk/network.js) - A JavaScript library, entirely written in ES6, to measure various aspects of a connection. It can accurately estimate a bandwidth/latency between a client (using a web browser) and a server (running a specific script).
+ 
+## Up and running VM
+
+First get the source
+
+```
+$ git clone https://github.com/enryIT/html5_speedtest.git
+```
+
+Then fire up the virtual machine with
+
+```
+$ vagrant up
+```
+
+Point your browser to [http://192.168.33.10](http://192.168.33.10).
 
 ## Contribute
 
