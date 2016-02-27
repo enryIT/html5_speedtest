@@ -85,33 +85,33 @@ Vagrant.configure(2) do |config|
     # INSTALL DB SERVER
     # http://docs.travis-ci.com/user/database-setup/
     # mysql; pgsql; sqlite
-    DBENGINE=mysql 
-    APPENV=local
-    DBHOST=localhost
-    DBUSER=root
-    DBPASSWD=password
-    DBNAME=speedtest
+    #DBENGINE=mysql 
+    #APPENV=local
+    #DBHOST=localhost
+    #DBUSER=root
+    #DBPASSWD=password
+    #DBNAME=speedtest
 
-    echo "mysql-server mysql-server/root_password password $DBPASSWD" | debconf-set-selections
-    echo "mysql-server mysql-server/root_password_again password $DBPASSWD" | debconf-set-selections
-    apt-get install -y mysql-server mysql-server-5.5
+    #echo "mysql-server mysql-server/root_password password $DBPASSWD" | debconf-set-selections
+    #echo "mysql-server mysql-server/root_password_again password $DBPASSWD" | debconf-set-selections
+    #apt-get install -y mysql-server mysql-server-5.5
 
-    sh -c "if [ '$DBENGINE' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS $DBNAME;' -U postgres; fi"
-    sh -c "if [ '$DBENGINE' = 'mysql' ]; then mysql --user=$DBUSER --password=$DBPASSWD -e 'DROP DATABASE IF EXISTS $DBNAME;'; fi"
+    #sh -c "if [ '$DBENGINE' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS $DBNAME;' -U postgres; fi"
+    #sh -c "if [ '$DBENGINE' = 'mysql' ]; then mysql --user=$DBUSER --password=$DBPASSWD -e 'DROP DATABASE IF EXISTS $DBNAME;'; fi"
 
-    sh -c "if [ '$DBENGINE' = 'pgsql' ]; then psql -c 'CREATE DATABASE $DBNAME;' -U postgres; fi"
-    sh -c "if [ '$DBENGINE' = 'mysql' ]; then mysql --user=$DBUSER --password=$DBPASSWD -e 'CREATE DATABASE IF NOT EXISTS $DBNAME;'; fi"
+    #sh -c "if [ '$DBENGINE' = 'pgsql' ]; then psql -c 'CREATE DATABASE $DBNAME;' -U postgres; fi"
+    #sh -c "if [ '$DBENGINE' = 'mysql' ]; then mysql --user=$DBUSER --password=$DBPASSWD -e 'CREATE DATABASE IF NOT EXISTS $DBNAME;'; fi"
 
     # INSTALL PACKAGES
-    apt-get install -y unzip apache2 php5-cli php5-curl php5-mysqlnd php5-common libapache2-mod-fcgid php5-cgi libapache2-mod-php5
+    apt-get install -y apache2 php5-cli php5-curl php5-common libapache2-mod-fcgid php5-cgi libapache2-mod-php5
 
     # PREPARING APACHE2
     a2enmod fcgid
     if ! [ -L /var/www ]; then
       rm -rf /var/www
-      mkdir -p /var/www
       chown -R www-data:www-data /var/www
       chmod 755 /var/www
+      ln -fs /vagrant /var/www
     fi
     echo "<VirtualHost *:80>
             DocumentRoot /var/www
@@ -119,12 +119,6 @@ Vagrant.configure(2) do |config|
             CustomLog ${APACHE_LOG_DIR}/access.log combined
           </VirtualHost>" > /etc/apache2/sites-enabled/000-default.conf
 
-    # DEPLOYING FILES
-    cd /var/www
-    wget https://github.com/enryIT/html5_speedtest/archive/master.zip
-    unzip master.zip
-    rm master.zip
-    
     # EDIT php.ini
     echo 'echo "memory_limit = 256M" >> /etc/php5/apache2/conf.d/user.ini' | sudo -s
     echo 'echo "upload_max_filesize = 200M" >> /etc/php5/apache2/conf.d/user.ini' | sudo -s
