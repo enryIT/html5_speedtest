@@ -109,8 +109,6 @@ Vagrant.configure(2) do |config|
     a2enmod fcgid
     if ! [ -L /var/www ]; then
       rm -rf /var/www
-      chown -R www-data:www-data /var/www
-      chmod 755 /var/www
       ln -fs /vagrant /var/www
     fi
     echo "<VirtualHost *:80>
