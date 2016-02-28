@@ -122,8 +122,8 @@ function start(size){
 		$( "#log" ).append("Starting " + rawModule + " measures " + "with " + (size / 1024 / 1024) + "MB" + " of data" + "...<br>");
 }
 function progress(avg, instant, loaded, size) {
-	size = (size/1024/1024/2).toFixed(2);
-	loaded = (loaded/1024/1024).toFixed(2);
+	size = size/1024/1024/2;
+	loaded = loaded/1024/1024;
 	if( rawModule == "download"){
 		ntmt_progressBar(loaded*100/size, $('#progressBarDown'));
 		ntmtTesterDialDown.drawDial(avg/1024*8);

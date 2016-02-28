@@ -216,8 +216,11 @@ function NtmtTesterDialPing(styleId) {
 	}
 }
 function ntmt_progressBar(percent, $element) {
-    var progressBarWidth = percent * $element.width() / 100;
-    $element.find('div').animate({ width: progressBarWidth }, 50).html(percent.toFixed(0) + "%");
+	if(percent>0){
+   		var progressBarWidth = percent * $element.width() / 100;
+    	$element.find('div').animate({ width: progressBarWidth }, 50).html(percent.toFixed(0) + "%");
+	} else 
+		$element.find('div').animate({ width: 0 }, 50).html("");
 }
 function ntmt_getvalue(value) {
 	var out=0;
