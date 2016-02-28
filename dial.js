@@ -15,28 +15,31 @@ function NtmtTesterDial(styleId,typ) {
 	this.DialGauge[4]=new Array(25600,45);
 	this.DialGauge[5]=new Array(51200,90);
 	this.DialGauge[6]=new Array(this.DialGaugeMax,135);
-	this.dWrite = function(value) {
-		document.write(value);
+	this.dWrite = function(s){
+        	var scripts = document.getElementsByTagName('script');
+    		var lastScript = scripts[scripts.length-1];
+    		lastScript.insertAdjacentHTML("afterend", s);
 	}
-	this.dWrite('<div id="'+this.htmlId+'" style="width:'+this.width+'px;"height:'+this.height+'px">');
-	this.dWrite('<div class="mtrwebtester_dial">');
+	this.divs='<div id="'+this.htmlId+'" style="width:'+this.width+'px;height:'+this.height+'px;">';
+	this.divs +='<div class="mtrwebtester_dial">';
 	if (typ=='up')
-		this.dWrite('<div class="mtrwebtester_dial_arrow mtrwebtester_dial_arrow_up">');
+		this.divs +='<div class="mtrwebtester_dial_arrow mtrwebtester_dial_arrow_up">';
 	else
-		this.dWrite('<div class="mtrwebtester_dial_arrow">');
-	this.dWrite('</div>');
-	this.dWrite('<div class="mtrwebtester_dial_fg">');
-	this.dWrite('</div>');
-	this.dWrite('<div class="mtrwebtester_dial_text">');
+		this.divs +='<div class="mtrwebtester_dial_arrow">';
+	this.divs+='</div>';
+	this.divs+='<div class="mtrwebtester_dial_fg">';
+	this.divs+='</div>';
+	this.divs+='<div class="mtrwebtester_dial_text">';
 	if (typ=='up')
-		this.dWrite('<span class="mtrwebtester_dial_text_number" style="color:#a26822">&nbsp;</span>');
+		this.divs+='<span class="mtrwebtester_dial_text_number" style="color:#a26822">&nbsp;</span>';
 	else
-		this.dWrite('<span class="mtrwebtester_dial_text_number" style="color:#5CA222">&nbsp;</span>');
-	this.dWrite('<span>Mbps</span>');
-	this.dWrite('</div>');
-	this.dWrite('</div>');
-	this.dWrite('</div>');
-	$('#'+this.htmlId+' .mtrwebtester_dial_arrow').show();
+		this.divs+='<span class="mtrwebtester_dial_text_number" style="color:#5CA222">&nbsp;</span>';
+	this.divs+='<span>Mbps</span>';
+	this.divs+='</div>';
+	this.divs+='</div>';
+	this.divs+='</div>';
+    this.dWrite(this.divs);
+        $('#'+this.htmlId+' .mtrwebtester_dial_arrow').show();
 	$('#'+this.htmlId+' .mtrwebtester_dial_arrow').animate({  value: -135 }, {
 		step: function(now,fx) {
 			$(this).css('-webkit-transform','rotate('+now+'deg)'); 
@@ -126,22 +129,25 @@ function NtmtTesterDialPing(styleId) {
 	this.DialGauge[4]=new Array(25,45);
 	this.DialGauge[5]=new Array(50,90);
 	this.DialGauge[6]=new Array(this.DialGaugeMax,135);
-	this.dWrite = function(value) {
-		document.write(value);
+	this.dWrite = function(s){
+        	var scripts = document.getElementsByTagName('script');
+    		var lastScript = scripts[scripts.length-1];
+    		lastScript.insertAdjacentHTML("afterend", s);
 	}
-	this.dWrite('<div id="'+this.htmlId+'" style="width:'+this.width+'px;height:'+this.height+'px;">');
-	this.dWrite('<div class="mtrwebtester_dial_ping">');
-	this.dWrite('<div class="mtrwebtester_dial_arrow mtrwebtester_dial_arrow_ping">');
-	this.dWrite('</div>');
-	this.dWrite('<div class="mtrwebtester_dial_fg">');
-	this.dWrite('</div>');
-	this.dWrite('<div class="mtrwebtester_dial_text">');
-	this.dWrite('<span class="mtrwebtester_dial_text_number" style="color:#237F89">&nbsp;</span>');
-	this.dWrite('<span>ms</span>');
-	this.dWrite('</div>');
-	this.dWrite('</div>');
-	this.dWrite('</div>');
-	$('#'+this.htmlId+' .mtrwebtester_dial_arrow').show();
+	this.divs='<div id="'+this.htmlId+'" style="width:'+this.width+'px;height:'+this.height+'px;">';
+	this.divs+='<div class="mtrwebtester_dial_ping">';
+	this.divs+='<div class="mtrwebtester_dial_arrow mtrwebtester_dial_arrow_ping">';
+	this.divs+='</div>';
+	this.divs+='<div class="mtrwebtester_dial_fg">';
+	this.divs+='</div>';
+	this.divs+='<div class="mtrwebtester_dial_text">';
+	this.divs+='<span class="mtrwebtester_dial_text_number" style="color:#237F89">&nbsp;</span>';
+	this.divs+='<span>ms</span>';
+	this.divs+='</div>';
+	this.divs+='</div>';
+	this.divs+='</div>';
+	this.dWrite(this.divs);
+        $('#'+this.htmlId+' .mtrwebtester_dial_arrow').show();
 	$('#'+this.htmlId+' .mtrwebtester_dial_arrow').animate({  value: -135 }, {
 		step: function(now,fx) {
 			$(this).css('-webkit-transform','rotate('+now+'deg)'); 
