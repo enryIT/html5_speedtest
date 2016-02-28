@@ -443,8 +443,8 @@ var BandwidthModule = (function (_HttpModule) {
         this.on(eventsPrefix + '-timeout', function () {
             return _this._timeout();
         });
-        this.on(eventsPrefix + '-loadend', function () {
-            return _this._end();
+        this.on(eventsPrefix + '-loadend', function (event) {
+            return _this._end(event);
         });
     }
 
@@ -590,7 +590,7 @@ var BandwidthModule = (function (_HttpModule) {
          */
     }, {
         key: '_end',
-        value: function _end() {
+        value: function _end(event) {
 	    var loaded = event.loaded;
             // A timeout or an abort occured, bypass the further requests and trigger the "end" event.
             if (this._intendedEnd) {
