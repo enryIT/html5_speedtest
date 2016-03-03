@@ -52,8 +52,8 @@ else
 		setTimeout(UI.start, 2000);
 	},
 
-        restart: function(size,loaded) {
-		$( "#log" ).append("It took less than 8 seconds to " + rawModule + " " + loaded/1024/1024 + "MB of data... Restarting with " + size/1024/1024 + "MB!<br>");
+        restart: function(size) {
+		$( "#log" ).append("It took less than 8 seconds to " + rawModule + " " + size/1024/1024/2 + "MB of data... Restarting with " + size/1024/1024 + "MB!<br>");
 	},
 
         stop: function() {

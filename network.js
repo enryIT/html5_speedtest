@@ -443,8 +443,8 @@ var BandwidthModule = (function (_HttpModule) {
         this.on(eventsPrefix + '-timeout', function () {
             return _this._timeout();
         });
-        this.on(eventsPrefix + '-loadend', function (event) {
-            return _this._end(event);
+        this.on(eventsPrefix + '-loadend', function () {
+            return _this._end();
         });
     }
 
@@ -590,8 +590,7 @@ var BandwidthModule = (function (_HttpModule) {
          */
     }, {
         key: '_end',
-        value: function _end(event) {
-	    var loaded = event.loaded;
+        value: function _end() {
             // A timeout or an abort occured, bypass the further requests and trigger the "end" event.
             if (this._intendedEnd) {
                 this._isRestarting = false;
@@ -604,7 +603,7 @@ var BandwidthModule = (function (_HttpModule) {
                         size = dataSettings.size * dataSettings.multiplier;
 
                     this.settings({ data: { size: size } });
-                    this.trigger('restart', size, loaded);
+                    this.trigger('restart', size);
 
                     this._isRestarting = true;
                     this.start();
