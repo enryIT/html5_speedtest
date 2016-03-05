@@ -67,7 +67,7 @@ else
         },
 		
 	value: function(value, unit) {
-        	if (value <= 50) {
+        	if (value <= 100) {
                 	return '<span class="green">' + value.toFixed(3) + ' ' + unit + '</span>';
         	} else if (value <= 200) {
 			return '<span class="orange">' + value.toFixed(3) + ' ' + unit + '</span>';
@@ -136,12 +136,12 @@ function end(avg) {
 	if( rawModule == "download" ){
 		ntmt_progressBar(100, $('#progressBarDown'));
 		var downloadResult = (avg / 1024 / 1024 * 8);
-		$( "#log" ).append("<b>Finished download, average: " + downloadResult.toFixed(2) + "Mbps<br></b>");
+		$( "#log" ).append("<b>Finished download, average: " + ntmt_getvalue(downloadResult) + "Mbps<br></b>");
 		setTimeout("startUpload()", 2000);
 	} else {
 		ntmt_progressBar(100, $('#progressBarUp'));
 		var uploadResult = (avg / 1024 / 1024 * 8);
-		$( "#log" ).append("<b>Finished upload, average: " + uploadResult.toFixed(2) + "Mbps<br></b>");
+		$( "#log" ).append("<b>Finished upload, average: " + ntmt_getvalue(uploadResult) + "Mbps<br></b>");
 		$( "#start" ).empty().append(" Restart test");
 		UI.stop();
 		UI.$btnStart.on('click', UI.reset);
@@ -153,14 +153,15 @@ function end(avg) {
         .on('start', start)
         .on('end', function(avg, all) {
             all = all.map(function(latency) {
-		return UI.value(latency, 'ms');
+	    ntmtTesterDialPing.drawDial(latency);	
+	    return UI.value(latency, 'ms');
             });
 
             all = '[ ' + all.join(' , ') + ' ]';
 	
-	    ntmtTesterDialPing.drawDial(avg);					
 	    $( "#log" ).append("Latency: " + all + "<br>");
-            $( "#log" ).append("<b>Average latency: " + avg.toFixed(2) + "ms <br></b>");
+            $( "#log" ).append("<b>Average latency: " + ntmt_getvalue(avg) + "ms <br></b>");
+	    ntmtTesterDialPing.drawDial(avg);
 	    setTimeout("startDownload()", 2000);
    });
 

@@ -64,10 +64,10 @@ function NtmtTesterDial(styleId,typ) {
 						$(this).css('-moz-transform','rotate('+now+'deg)');
 						$(this).css('transform','rotate('+now+'deg)');
 					},
-					duration:10,
+					duration:20,
 			},'linear');
 		jQuery({someValue: (this.valueOld/1024) ,  htmlID:this.htmlId }).animate({someValue: (value/1024)}, {
-			duration: 10,
+			duration: 20,
 			easing:'linear',
 			step: function() {
 				$('#'+this.htmlID+' .mtrwebtester_dial_text_number').text(ntmt_getvalue(this.someValue));
@@ -225,7 +225,7 @@ function NtmtTesterDialPing(styleId) {
 function ntmt_progressBar(percent, $element) {
 	if(percent>0){
    		var progressBarWidth = percent * $element.width() / 100;
-    	$element.find('div').animate({ width: progressBarWidth }, 10).html(percent.toFixed(0) + "%");
+    	$element.find('div').animate({ width: progressBarWidth }, 20).html(percent.toFixed(0) + "%");
 	} else 
 		$element.find('div').animate({ width: 0 }, 1000).html("");
 }
